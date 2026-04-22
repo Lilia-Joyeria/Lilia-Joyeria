@@ -8,6 +8,7 @@ public_folder: "/img"
 collections:
   - name: "productos"
     label: "Productos"
+    label_singular: "Producto"
     files:
       - file: "data/productos.json"
         label: "Lista de productos"
@@ -17,8 +18,18 @@ collections:
             name: "items"
             widget: "list"
             fields:
-              - { label: "Nombre", name: "nombre", widget: "string" }
-              - { label: "Precio", name: "precio", widget: "string" }
-              - { label: "Imagen", name: "imagen", widget: "image" }
-              - { label: "Descripcion", name: "descripcion", widget: "text" }
-              - { label: "Material", name: "material", widget: "string" }
+              - label: "Nombre"
+                name: "nombre"
+                widget: "string"
+              - label: "Precio"
+                name: "precio"
+                widget: "string"
+              - label: "Imagen"
+                name: "imagen"
+                widget: "image"
+              - label: "Descripcion"
+                name: "descripcion"
+                widget: "text"
+              - label: "Material"
+                name: "material"
+                widget: "string"
