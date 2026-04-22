@@ -33,7 +33,7 @@
     <section class="productos">
         <h2>Anillos</h2>
 
-        <div class="grid">
+        <div class="grid" id="contenedor-productos"></div>
 
         <div class="card">
             <a href="producto-anillo1.html">
@@ -53,6 +53,35 @@
     </footer>
 
 </div>
+
+<script>
+fetch('data/productos.json')
+  .then(res => res.json())
+  .then(data => {
+    const contenedor = document.getElementById("contenedor-productos");
+
+    contenedor.innerHTML = "";
+
+    data.items.forEach((p, index) => {
+      contenedor.innerHTML += `
+        <div class="card" onclick="verProducto(${index})">
+          <img src="${p.imagen}">
+          <h3>${p.nombre}</h3>
+          <p>${p.descripcion}</p>
+          <span>${p.precio}</span>
+        </div>
+      `;
+    });
+
+    // Guardamos productos para usarlos después
+    window.productos = data.items;
+  });
+
+function verProducto(i) {
+  localStorage.setItem("producto", JSON.stringify(window.productos[i]));
+  window.location.href = "detalle.html";
+}
+</script>
 
 </body>
 </html>
