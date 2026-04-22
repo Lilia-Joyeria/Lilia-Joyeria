@@ -55,7 +55,7 @@
 </div>
 
 <script>
-fetch('data/productos.json')
+fetch('data/productos.json?v=' + new Date().getTime())
   .then(res => res.json())
   .then(data => {
     const contenedor = document.getElementById("contenedor-productos");
@@ -65,7 +65,7 @@ fetch('data/productos.json')
     data.items.forEach((p, index) => {
       contenedor.innerHTML += `
         <div class="card" onclick="verProducto(${index})">
-          <img src="${p.imagen}">
+          <img src="${p.imagen.startsWith('/') ? p.imagen.substring(1) : p.imagen}">
           <h3>${p.nombre}</h3>
           <p>${p.descripcion}</p>
           <span>${p.precio}</span>
