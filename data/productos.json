@@ -1,0 +1,11 @@
+{
+  "items": [
+    {
+      "nombre": "Anillo Elegante",
+      "precio": "$199 MXN",
+      "imagen": "img/1.jpg",
+      "descripcion": "Diseño fino en acero inoxidable",
+      "material": "Acero inoxidable"
+    }
+  ]
+}
