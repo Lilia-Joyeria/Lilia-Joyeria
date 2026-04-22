@@ -10,12 +10,14 @@ html, body {
 
 /* ===== CONTENEDOR PRINCIPAL ===== */
 .contenedor {
-    min-height: calc(100vh - 40px);
+    height: calc(100vh - 40px); /* 🔥 IMPORTANTE */
+   
     margin: 20px;
     background: linear-gradient(135deg, #111, #222);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* 🔥 clave */
 }
 
 /* ===== HEADER ===== */
@@ -112,7 +114,6 @@ html, body {
     padding: 10px;
     color: white;
     text-align: center;
-
     overflow-y: auto; /* 🔥 scroll SOLO aquí */
 }
 
@@ -217,17 +218,7 @@ html, body {
     padding: 10px;
 }
 
-/* ===== SCROLL OCULTO PERO FUNCIONAL ===== */
-.contenedor {
-    overflow-y: auto;
 
-    /* 🔥 OCULTAR SCROLL */
-    scrollbar-width: none; /* Firefox */
-}
-
-.contenedor::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-}
 
 
 /* ===== SECCIÓN WHATSAPP ===== */
