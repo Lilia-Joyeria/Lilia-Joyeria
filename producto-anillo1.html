@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anillo Elegante</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <header class="header">
+        <div class="logo">💎 Lilia - Joyería</div>
+
+        <nav class="menu">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="anillos.html">Anillos</a></li>
+                <li><a href="collares.html">Collares</a></li>
+                <li><a href="pulseras.html">Pulseras</a></li>
+                <li><a href="aretes.html">Aretes</a></li>
+            </ul>
+        </nav>
+
+        <div class="contacto">
+            <a href="contacto.html">Contacto</a>
+        </div>
+    </header>
+
+    <!-- DETALLE -->
+    <section class="detalle-producto">
+
+        <div class="detalle-contenido">
+
+
+            <div class="galeria">
+
+                <!-- IMAGEN PRINCIPAL -->
+                <img src="img/1.jpg" class="img-principal" id="imgPrincipal">
+
+                <!-- MINIATURAS -->
+                <div class="miniaturas">
+                    <img src="img/2.jpg" onclick="cambiarImagen(this)">
+                    <img src="img/3.jpg" onclick="cambiarImagen(this)">
+                    <img src="img/1.jpg" onclick="cambiarImagen(this)">
+                </div>
+
+            </div>
+            <div class="detalle-info">
+                <h1>Anillo Elegante</h1>
+                <p>Diseño fino en acero inoxidable, ideal para cualquier ocasión.</p>
+
+                <span class="precio">$199 MXN</span>
+
+                <!-- MATERIAL -->
+                <p class="material"><strong>Material:</strong> Acero inoxidable</p>
+
+                <!-- TALLAS -->
+                <div class="tallas">
+                    <p><strong>Talla:</strong></p>
+                    <div class="opciones-talla">
+                        <button onclick="seleccionarTalla(this)">6</button>
+                        <button onclick="seleccionarTalla(this)">7</button>
+                        <button onclick="seleccionarTalla(this)">8</button>
+                        <button onclick="seleccionarTalla(this)">9</button>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/5215571776744?text=Hola,%20me%20interesa%20el%20Anillo%20Elegante" 
+                target="_blank" class="btn-whatsapp">
+                💬 Comprar por WhatsApp
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        <p class="autor">Creado por Erick Martínez Escobar</p>
+    </footer>
+
+</div>
+
+
+    <script>
+    function cambiarImagen(img) {
+        document.getElementById("imgPrincipal").src = img.src;
+    }
+    </script>
+
+
+    <script>
+    function seleccionarTalla(btn) {
+        // quitar selección anterior
+        document.querySelectorAll(".opciones-talla button")
+            .forEach(b => b.classList.remove("activa"));
+
+        // activar la seleccionada
+        btn.classList.add("activa");
+    }
+    </script>
+
+</body>
+</html>
