@@ -137,11 +137,13 @@ html, body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    padding: 10px; /* 🔥 espacio alrededor */
 }
 
 /* TARJETAS */
 .card {
-    width: 220px;
+    width: 200px;
+    margin: 5px; /* 🔥 separación adicional */
     background: white;
     color: black;
     border-radius: 10px;
@@ -194,6 +196,8 @@ html, body {
 .footer {
     text-align: center;
     padding: 10px;
+    color: #ccc;
+    margin-top: auto; /* 🔥 empuja el footer abajo dentro del fondo negro */
 }
 
 .autor {
@@ -296,9 +300,6 @@ html, body {
 
 
 /* ===== FOOTER AJUSTE ===== */
-.footer {
-    margin-top: 20px;
-}
 
 
 
