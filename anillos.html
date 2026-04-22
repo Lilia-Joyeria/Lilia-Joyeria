@@ -68,7 +68,7 @@ fetch('data/productos.json?v=' + new Date().getTime())
           <img src="${p.imagen.startsWith('/') ? p.imagen.substring(1) : p.imagen}">
           <h3>${p.nombre}</h3>
           <p>${p.descripcion}</p>
-          <span>${p.precio}</span>
+          <span>$${p.precio} MXN</span>
         </div>
       `;
     });
