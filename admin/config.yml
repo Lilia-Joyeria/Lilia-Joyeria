@@ -33,3 +33,6 @@ collections:
               - label: "Material"
                 name: "material"
                 widget: "string"
+              - label: "Tallas"
+                name: "tallas"
+                widget: "list"
