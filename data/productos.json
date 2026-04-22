@@ -6,13 +6,6 @@
       "imagen": "img/1.jpg",
       "descripcion": "Diseño fino en acero inoxidable",
       "material": "Acero inoxidable"
-    },
-    {
-      "nombre": "Erick",
-      "precio": "200",
-      "descripcion": "es muy bueno",
-      "material": "el mejor",
-      "imagen": "/img/2.jpg"
     }
   ]
 }
