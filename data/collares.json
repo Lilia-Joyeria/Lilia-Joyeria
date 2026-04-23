@@ -1,0 +1,65 @@
+{
+  "items": [
+    {
+      "nombre": "Collar cadena fina dorada",
+      "precio": "480",
+      "imagen": "/img/collar1.jpg",
+      "material": "Oro laminado 18k",
+      "material_filtro": "oro laminado",
+      "descripcion": "Cadena fina y delicada, ideal para uso diario o capas.",
+      "tallas": [],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Collar perla clásico",
+      "precio": "720",
+      "imagen": "/img/collar2.jpg",
+      "material": "Perla sintética y plata 925",
+      "material_filtro": "plata",
+      "descripcion": "Elegancia atemporal con perla central y cadena de plata.",
+      "tallas": [],
+      "badge": "Nuevo",
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Collar con dije de corazón",
+      "precio": "350",
+      "imagen": "/img/collar3.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Dije de corazón pulido sobre cadena de acero resistente.",
+      "tallas": [],
+      "genero": "unisex"
+    },
+    {
+      "nombre": "Gargantilla negra minimalista",
+      "precio": "280",
+      "imagen": "/img/collar4.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Gargantilla ajustada de estilo moderno y urbano.",
+      "tallas": [],
+      "genero": "hombre"
+    },
+    {
+      "nombre": "Collar multicapa boho",
+      "precio": "540",
+      "imagen": "/img/collar5.jpg",
+      "material": "Oro laminado 18k",
+      "material_filtro": "oro laminado",
+      "descripcion": "Tres capas de cadenas finas con dijes pequeños.",
+      "tallas": [],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Collar luna y estrellas",
+      "precio": "390",
+      "imagen": "/img/collar6.jpg",
+      "material": "Plata ley 925",
+      "material_filtro": "plata",
+      "descripcion": "Dije de luna creciente con estrellitas colgantes.",
+      "tallas": [],
+      "genero": "mujer"
+    }
+  ]
+}

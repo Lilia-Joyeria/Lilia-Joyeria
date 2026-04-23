@@ -1,0 +1,132 @@
+{
+  "items": [
+    {
+      "nombre": "Anillo de compromiso solitario",
+      "precio": "8500",
+      "imagen": "/img/1.jpg",
+      "material": "Oro blanco 14k con zirconia",
+      "material_filtro": "oro laminado",
+      "descripcion": "Anillo elegante con piedra central tipo diamante, ideal para compromiso.",
+      "tallas": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "badge": "Nuevo",
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Anillo clásico de plata",
+      "precio": "650",
+      "imagen": "/img/3.jpg",
+      "material": "Plata ley 925",
+      "material_filtro": "plata",
+      "descripcion": "Diseño sencillo y brillante, perfecto para uso diario.",
+      "tallas": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Anillo ajustable minimalista",
+      "precio": "320",
+      "imagen": "/img/3.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Anillo moderno y resistente, ideal para cualquier ocasión.",
+      "tallas": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "genero": "unisex"
+    },
+    {
+      "nombre": "Anillo con piedra negra",
+      "precio": "480",
+      "imagen": "/img/1.jpg",
+      "material": "Acero con ónix",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Diseño elegante con piedra oscura, estilo sobrio y masculino.",
+      "tallas": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "genero": "hombre"
+    },
+    {
+      "nombre": "Anillo tipo alianza",
+      "precio": "1200",
+      "imagen": "/img/1.jpg",
+      "material": "Oro amarillo 10k",
+      "material_filtro": "oro laminado",
+      "descripcion": "Alianza clásica ideal para bodas o aniversarios.",
+      "tallas": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Anillo vintage grabado",
+      "precio": "780",
+      "imagen": "/img/3.jpg",
+      "material": "Plata envejecida",
+      "material_filtro": "plata",
+      "descripcion": "Diseño antiguo con grabados detallados, estilo retro.",
+      "tallas": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "genero": "unisex"
+    },
+    {
+      "nombre": "Anillo doble aro moderno",
+      "precio": "540",
+      "imagen": "/img/3.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Diseño contemporáneo de doble aro, ligero y resistente.",
+      "tallas": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "genero": "unisex"
+    },
+    {
+      "nombre": "Anillo con cristal brillante",
+      "precio": "400",
+      "imagen": "/img/1.jpg",
+      "material": "Aleación con cristal",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Anillo llamativo con cristal brillante, ideal para eventos.",
+      "tallas": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "genero": "mujer"
+    }
+  ]
+}

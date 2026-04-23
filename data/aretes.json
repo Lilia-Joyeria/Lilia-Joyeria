@@ -1,0 +1,65 @@
+{
+  "items": [
+    {
+      "nombre": "Aretes argolla dorada grande",
+      "precio": "260",
+      "imagen": "/img/arete1.jpg",
+      "material": "Oro laminado 18k",
+      "material_filtro": "oro laminado",
+      "descripcion": "Argolla lisa de tamaño generoso, clásica y versátil.",
+      "tallas": [],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Aretes perla colgante",
+      "precio": "340",
+      "imagen": "/img/arete2.jpg",
+      "material": "Plata ley 925",
+      "material_filtro": "plata",
+      "descripcion": "Perla sintética en tono marfil con gancho de plata.",
+      "tallas": [],
+      "badge": "Nuevo",
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Aretes mini estrella acero",
+      "precio": "180",
+      "imagen": "/img/arete3.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Aretes pequeños con forma de estrella, ideales para el diario.",
+      "tallas": [],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Aretes gota cristal brillante",
+      "precio": "420",
+      "imagen": "/img/arete4.jpg",
+      "material": "Aleación con cristal",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Gota transparente con acabado brillante para eventos especiales.",
+      "tallas": [],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Aretes medio aro oro rosa",
+      "precio": "310",
+      "imagen": "/img/arete5.jpg",
+      "material": "Oro rosa laminado",
+      "material_filtro": "oro rosa",
+      "descripcion": "Medio aro elegante y femenino en tono oro rosa.",
+      "tallas": [],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Aretes cuadrado minimalista",
+      "precio": "220",
+      "imagen": "/img/arete6.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Forma geométrica cuadrada con acabado pulido mate.",
+      "tallas": [],
+      "genero": "unisex"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "nombre": "Pulsera cadena dorada clásica",
+      "precio": "320",
+      "imagen": "/img/pulsera1.jpg",
+      "material": "Oro laminado 18k",
+      "material_filtro": "oro laminado",
+      "descripcion": "Cadena fina y elegante, perfecta para cualquier ocasión.",
+      "tallas": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Pulsera de plata con charms",
+      "precio": "580",
+      "imagen": "/img/pulsera2.jpg",
+      "material": "Plata ley 925",
+      "material_filtro": "plata",
+      "descripcion": "Pulsera estilo pandora con dijes intercambiables.",
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "badge": "Nuevo",
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Pulsera minimalista acero",
+      "precio": "240",
+      "imagen": "/img/pulsera3.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Diseño delgado y resistente, ideal para uso diario.",
+      "tallas": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "genero": "unisex"
+    },
+    {
+      "nombre": "Pulsera tejida con cierre dorado",
+      "precio": "290",
+      "imagen": "/img/pulsera4.jpg",
+      "material": "Oro laminado 18k",
+      "material_filtro": "oro laminado",
+      "descripcion": "Combinación de hilo y metal, look boho chic.",
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "genero": "mujer"
+    },
+    {
+      "nombre": "Pulsera rígida lisa",
+      "precio": "410",
+      "imagen": "/img/pulsera5.jpg",
+      "material": "Acero inoxidable",
+      "material_filtro": "acero inoxidable",
+      "descripcion": "Brazalete rígido pulido, estilo moderno y atemporal.",
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "genero": "hombre"
+    },
+    {
+      "nombre": "Pulsera corazón oro rosa",
+      "precio": "460",
+      "imagen": "/img/pulsera6.jpg",
+      "material": "Oro rosa laminado",
+      "material_filtro": "oro rosa",
+      "descripcion": "Delicada cadena con dije de corazón en oro rosa.",
+      "tallas": [
+        "XS",
+        "S",
+        "M"
+      ],
+      "genero": "mujer"
+    }
+  ]
+}
