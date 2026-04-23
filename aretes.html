@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aretes — Lilia Joyería</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .products-grid { gap: 12px; background: transparent; border: none; }
+        .filter-item input[type="radio"] { accent-color: var(--gold); width: 14px; height: 14px; cursor: pointer; }
+        .size-btn.all-active { border-color: var(--gold); background: #fffbef; color: var(--black); }
+        .no-results { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #aaa; font-size: 14px; letter-spacing: 0.5px; }
+        .filter-reset { font-size: 11px; color: #aaa; cursor: pointer; text-decoration: underline; background: none; border: none; font-family: var(--font-body); letter-spacing: 0.5px; margin-top: 8px; display: none; }
+        .filter-reset:hover { color: var(--black); }
+        .card-tallas-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #aaa; margin: 8px 0 5px; }
+        .card-tallas { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+        .card-talla-btn { border: 1px solid #ddd; background: none; font-size: 11px; font-family: var(--font-body); padding: 3px 8px; cursor: pointer; color: #555; transition: all 0.15s; line-height: 1.4; }
+        .card-talla-btn:hover { border-color: var(--black); color: var(--black); }
+        .card-talla-btn.sel { border-color: var(--black); background: var(--black); color: #fff; }
+        .card-talla-aviso { font-size: 10px; color: #e05555; min-height: 14px; margin-bottom: 2px; }
+        .genero-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+        .genero-btn { border: 1px solid var(--gray-light); background: none; padding: 5px 12px; font-size: 12px; font-family: var(--font-body); cursor: pointer; color: #555; transition: all 0.2s; }
+        .genero-btn:hover { border-color: var(--black); color: var(--black); }
+        .genero-btn.active { border-color: var(--gold); background: #fffbef; color: var(--black); }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <a href="index.html" class="logo"><span class="gem">✦</span> LILIA - JOYERIA</a>
+            <div class="header-actions">
+                <a href="carrito.html" class="carrito-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                    Carrito
+                    <span id="carrito-badge">0</span>
+                </a>
+                <a href="contacto.html" class="btn-contacto">Contacto</a>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Inicio</a>
+            <a href="anillos.html">Anillos</a>
+            <a href="collares.html">Collares</a>
+            <a href="pulseras.html">Pulseras</a>
+            <a href="aretes.html" class="active">Aretes</a>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="sep">›</span>
+        <span class="current">Aretes</span>
+    </div>
+
+    <div class="catalog-layout">
+
+        <aside class="sidebar">
+
+            <!-- MATERIAL: se genera dinámicamente desde el JSON -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">Material</div>
+                <div id="filtros-material">
+                    <div class="filter-item">
+                        <input type="radio" name="material" id="m-todos" value="" checked>
+                        <label for="m-todos">Todos</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TALLA: se genera dinámicamente desde el JSON -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">Talla</div>
+                <div class="size-options" id="filtros-talla">
+                    <button class="size-btn all-active" data-talla="">Todas</button>
+                </div>
+                <button class="filter-reset" id="reset-talla">Quitar filtro de talla</button>
+            </div>
+
+            <!-- GÉNERO -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">Género</div>
+                <div class="genero-btns">
+                    <button class="genero-btn active" data-genero="">Todos</button>
+                    <button class="genero-btn" data-genero="mujer">Mujer</button>
+                    <button class="genero-btn" data-genero="hombre">Hombre</button>
+                    <button class="genero-btn" data-genero="unisex">Unisex</button>
+                </div>
+            </div>
+
+        </aside>
+
+        <main class="catalog-main">
+
+            <div class="catalog-header">
+                <h1 class="catalog-title">Aretes</h1>
+                <select class="sort-select" id="sort-select">
+                    <option value="az">Nombre: A → Z</option>
+                    <option value="za">Nombre: Z → A</option>
+                    <option value="asc">Precio: menor a mayor</option>
+                    <option value="desc">Precio: mayor a menor</option>
+                    <option value="new">Más nuevos</option>
+                </select>
+            </div>
+            <div class="result-count" id="result-count">Cargando productos...</div>
+            <div class="products-grid" id="contenedor-productos"></div>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <strong>Copyright</strong> &nbsp;·&nbsp; <span class="autor">Creado por Erick Martínez Escobar</span>
+    </footer>
+
+    <script src="carrito.js"></script>
+    <script>
+        let todosLosProductos = [];
+        let filtroMaterial    = "";
+        let filtroTalla       = "";
+        let filtroGenero      = "";
+        let ordenActual       = "az";
+        const tallasSeleccionadas = {};
+        const TALLA_ORDEN = {"XS":0,"S":1,"M":2,"L":3,"XL":4,"XXL":5};
+
+        function ordenarTallas(arr) {
+            const sonTexto = arr.some(t => isNaN(Number(t)));
+            if (sonTexto) return arr.sort((a,b) => (TALLA_ORDEN[a]??99)-(TALLA_ORDEN[b]??99));
+            return arr.sort((a,b) => Number(a)-Number(b));
+        }
+
+        function construirFiltros(productos) {
+            const materialesVistos = new Set();
+            const contMat = document.getElementById("filtros-material");
+            productos.forEach(p => {
+                const clave = (p.material_filtro||"").toLowerCase().trim();
+                const label = p.material_filtro||p.material;
+                if (clave && !materialesVistos.has(clave)) {
+                    materialesVistos.add(clave);
+                    const id = "m-"+clave.replace(/ /g,'-');
+                    const div = document.createElement("div");
+                    div.className = "filter-item";
+                    div.innerHTML = '<input type="radio" name="material" id="'+id+'" value="'+clave+'"><label for="'+id+'">'+label+'</label>';
+                    contMat.appendChild(div);
+                }
+            });
+            document.querySelectorAll('input[name="material"]').forEach(r => {
+                r.addEventListener('change', () => { filtroMaterial = r.value; renderProductos(); });
+            });
+
+            const tallasSet = new Set();
+            productos.forEach(p => (p.tallas||[]).forEach(t => tallasSet.add(String(t))));
+            const contTalla = document.getElementById("filtros-talla");
+            ordenarTallas([...tallasSet]).forEach(t => {
+                const btn = document.createElement("button");
+                btn.className = "size-btn"; btn.dataset.talla = t; btn.textContent = t;
+                contTalla.appendChild(btn);
+            });
+
+            const resetTalla = document.getElementById("reset-talla");
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active','all-active'));
+                    btn.classList.add('active');
+                    if (btn.dataset.talla === '') btn.classList.add('all-active');
+                    filtroTalla = btn.dataset.talla;
+                    resetTalla.style.display = filtroTalla ? 'inline-block' : 'none';
+                    renderProductos();
+                });
+            });
+            resetTalla.addEventListener('click', () => {
+                filtroTalla = "";
+                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active','all-active'));
+                document.querySelector('[data-talla=""]').classList.add('all-active');
+                resetTalla.style.display = 'none';
+                renderProductos();
+            });
+
+            document.querySelectorAll('.genero-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.genero-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filtroGenero = btn.dataset.genero;
+                    renderProductos();
+                });
+            });
+        }
+
+        function renderProductos() {
+            const contenedor = document.getElementById("contenedor-productos");
+            const contador   = document.getElementById("result-count");
+            let lista = todosLosProductos.filter(p => {
+                const matFiltro = (p.material_filtro||p.material||"").toLowerCase();
+                const tallas    = (p.tallas||[]).map(t => String(t));
+                const genero    = (p.genero||"").toLowerCase();
+                const pasaMaterial = !filtroMaterial || matFiltro === filtroMaterial;
+                const pasaTalla    = !filtroTalla    || tallas.includes(filtroTalla);
+                const pasaGenero   = !filtroGenero   || genero === filtroGenero || genero === "unisex";
+                return pasaMaterial && pasaTalla && pasaGenero;
+            });
+            lista = [...lista];
+            if (ordenActual==="asc")  lista.sort((a,b)=>Number(a.precio)-Number(b.precio));
+            if (ordenActual==="desc") lista.sort((a,b)=>Number(b.precio)-Number(a.precio));
+            if (ordenActual==="az")   lista.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+            if (ordenActual==="za")   lista.sort((a,b)=>b.nombre.localeCompare(a.nombre,'es'));
+            if (ordenActual==="new")  lista = [...lista].reverse();
+
+            if (lista.length === 0) {
+                contenedor.innerHTML = '<div class="no-results">No hay productos con ese filtro.</div>';
+                contador.textContent = "0 productos"; return;
+            }
+
+            contenedor.innerHTML = lista.map(p => {
+                const idx      = todosLosProductos.indexOf(p);
+                const imgSrc   = p.imagen.startsWith('/') ? p.imagen.substring(1) : p.imagen;
+                const badge    = p.badge ? '<span class="card-badge '+(p.badge==='Nuevo'?'gold':'')+'">' + p.badge + '</span>' : '';
+                const oldPrice = p.precio_anterior ? '<span class="old-price">$'+p.precio_anterior+'</span>' : '';
+                const tallas   = p.tallas || [];
+                let tallasHTML = '';
+                if (tallas.length > 0) {
+                    const btns = tallas.map(t =>
+                        '<button class="card-talla-btn" data-idx="'+idx+'" data-talla="'+t+'" onclick="event.stopPropagation();selTalla(this,'+idx+')">'+t+'</button>'
+                    ).join('');
+                    tallasHTML = '<div class="card-tallas-label">Talla</div><div class="card-tallas" id="tallas-card-'+idx+'">'+btns+'</div><div class="card-talla-aviso" id="aviso-card-'+idx+'"></div>';
+                }
+                return '<div class="card" onclick="verProducto('+idx+')">' +
+                    '<div class="card-img-wrap">' +
+                        '<img src="'+imgSrc+'" alt="'+p.nombre+'" onerror="this.style.display=&quot;none&quot;">' +
+                        badge +
+                        '<button class="card-wishlist" onclick="event.stopPropagation()">&#9825;</button>' +
+                    '</div>' +
+                    '<div class="card-info">' +
+                        '<h3>'+p.nombre+'</h3>' +
+                        '<div class="card-material">'+p.material+'</div>' +
+                        '<div class="card-price">$'+p.precio+' MXN '+oldPrice+'</div>' +
+                        tallasHTML +
+                        '<button class="card-btn" onclick="event.stopPropagation();agregarAlCarrito('+idx+',this)">Agregar al carrito</button>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+
+            const n = lista.length;
+            contador.textContent = n + (n===1?' producto':' productos');
+        }
+
+        function selTalla(btn, idx) {
+            document.querySelectorAll('[data-idx="'+idx+'"]').forEach(b => b.classList.remove('sel'));
+            btn.classList.add('sel');
+            tallasSeleccionadas[idx] = btn.dataset.talla;
+            const av = document.getElementById('aviso-card-'+idx);
+            if (av) av.textContent = "";
+        }
+
+        function agregarAlCarrito(i, btn) {
+            const p = window.productos[i];
+            const tallas = p.tallas || [];
+            if (tallas.length > 0 && !tallasSeleccionadas[i]) {
+                const av = document.getElementById('aviso-card-'+i);
+                if (av) av.textContent = "Elige una talla";
+                return;
+            }
+            Carrito.agregar(p, tallasSeleccionadas[i] || null);
+            const orig = btn.textContent;
+            btn.textContent = "¡Agregado!"; btn.style.background = "#2a9d5c"; btn.style.color = "#fff";
+            setTimeout(() => { btn.textContent = orig; btn.style.background = ""; btn.style.color = ""; }, 1800);
+        }
+
+        function verProducto(i) {
+            localStorage.setItem("producto", JSON.stringify(window.productos[i]));
+            window.location.href = "detalle.html";
+        }
+
+        document.getElementById("sort-select").addEventListener('change', function() {
+            ordenActual = this.value; renderProductos();
+        });
+
+        fetch('data/aretes.json?v=' + new Date().getTime())
+            .then(res => { if(!res.ok) throw new Error(); return res.json(); })
+            .then(data => {
+                todosLosProductos = data.items;
+                window.productos  = data.items;
+                construirFiltros(data.items);
+                renderProductos();
+            })
+            .catch(() => {
+                document.getElementById("result-count").textContent = "Abre con Live Server para ver los productos";
+                document.getElementById("contenedor-productos").innerHTML =
+                    '<div class="no-results">En VS Code: clic derecho en index.html &#8594; <strong>Open with Live Server</strong></div>';
+            });
+    </script>
+
+</body>
+</html>

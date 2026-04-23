@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito — Lilia Joyería</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ── Recibo imprimible ── */
+        .recibo {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #1a1a1a;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+        .recibo-header {
+            text-align: center;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+        .recibo-header h3 {
+            font-size: 16px;
+            letter-spacing: 3px;
+            margin-bottom: 2px;
+        }
+        .recibo-header .recibo-sub {
+            font-size: 11px;
+            color: #888;
+        }
+        .recibo-seccion {
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .recibo-fila {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .recibo-fila .r-label { color: #888; }
+        .recibo-items .ri {
+            padding: 6px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        .recibo-items .ri:last-child { border: none; }
+        .recibo-items .ri-nombre { font-weight: bold; font-size: 12px; }
+        .recibo-items .ri-det { font-size: 11px; color: #666; }
+        .recibo-items .ri-precio { font-size: 12px; text-align: right; margin-top: 2px; }
+        .recibo-total {
+            font-size: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+        }
+        .recibo-entrega {
+            background: #fffbef;
+            border: 1px dashed #d4af37;
+            padding: 10px;
+            font-size: 11px;
+            line-height: 1.8;
+            margin: 10px 0;
+            color: #555;
+        }
+        .recibo-entrega strong { color: #1a1a1a; }
+        .recibo-banco {
+            background: #f5f5f5;
+            padding: 10px;
+            font-size: 11px;
+            line-height: 2;
+        }
+        .recibo-banco strong { color: #d4af37; }
+        .recibo-footer {
+            text-align: center;
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        /* ── Botones del modal ── */
+        .modal-acciones {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-imprimir {
+            flex: 1;
+            background: none;
+            border: 1px solid var(--gold);
+            color: var(--black);
+            padding: 12px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-imprimir:hover { background: #fffbef; }
+        .btn-confirmar-pago {
+            flex: 1;
+            background: #2a9d5c;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-confirmar-pago:hover { background: #238a50; }
+
+        /* ── Pantalla pedido confirmado ── */
+        .confirmado-wrap {
+            text-align: center;
+            padding: 20px 0 10px;
+        }
+        .confirmado-icono {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .confirmado-wrap h2 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+        .confirmado-wrap p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+        .btn-volver-tienda {
+            display: inline-block;
+            margin-top: 16px;
+            background: var(--black);
+            color: #fff;
+            padding: 13px 28px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-volver-tienda:hover { background: var(--gold); color: var(--black); }
+
+        @media print {
+            body > *:not(.modal-overlay) { display: none !important; }
+            .modal-overlay { display: block !important; background: none !important; }
+            .modal-box { box-shadow: none !important; border: none !important; max-width: 100% !important; }
+            .modal-acciones, .modal-cerrar { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <a href="index.html" class="logo"><span class="gem">✦</span> LILIA - JOYERIA</a>
+            <div class="header-actions">
+                <a href="carrito.html" class="carrito-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                    Carrito
+                    <span id="carrito-badge">0</span>
+                </a>
+                <a href="contacto.html" class="btn-contacto">Contacto</a>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Inicio</a>
+            <a href="anillos.html">Anillos</a>
+            <a href="collares.html">Collares</a>
+            <a href="pulseras.html">Pulseras</a>
+            <a href="aretes.html">Aretes</a>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="sep">›</span>
+        <span class="current">Carrito</span>
+    </div>
+
+    <div class="carrito-page">
+        <div>
+            <h1 class="carrito-lista-titulo">Mi carrito</h1>
+            <div id="carrito-lista"></div>
+        </div>
+
+        <aside class="carrito-resumen">
+            <h2>Resumen del pedido</h2>
+
+            <div class="resumen-fila">
+                <span>Subtotal</span>
+                <span id="res-subtotal">$0 MXN</span>
+            </div>
+            <div class="resumen-fila">
+                <span>Envío</span>
+                <span style="color:#2a9d5c;font-weight:500">Entrega personal</span>
+            </div>
+            <div class="resumen-fila total">
+                <span>Total</span>
+                <span id="res-total">$0 MXN</span>
+            </div>
+
+            <!-- Nota de entrega -->
+            <div style="background:#f9f8f6;border-left:3px solid var(--gold);padding:10px 12px;font-size:12px;color:#666;line-height:1.7;margin-bottom:16px">
+                <strong style="color:var(--black);display:block;margin-bottom:3px">&#128205; Entrega personal</strong>
+                Puedes recoger tu pedido directamente en el puesto, o bien coordinar
+                un punto de entrega a través de WhatsApp.
+            </div>
+
+            <button class="btn-pagar" id="btn-pagar" disabled>
+                Proceder al pago
+            </button>
+            <button class="btn-vaciar" id="btn-vaciar">
+                Vaciar carrito
+            </button>
+        </aside>
+    </div>
+
+    <!-- ── MODAL RECIBO + TRANSFERENCIA ── -->
+    <div class="modal-overlay" id="modal-pago">
+        <div class="modal-box" style="max-width:500px;max-height:90vh;overflow-y:auto">
+
+            <!-- Vista: recibo -->
+            <div id="vista-recibo">
+                <div class="recibo" id="recibo-contenido">
+
+                    <div class="recibo-header">
+                        <h3>✦ LILIA JOYERÍA ✦</h3>
+                        <div class="recibo-sub">Pedido · <span id="r-fecha"></span></div>
+                        <div class="recibo-sub">Folio: <strong id="r-folio"></strong></div>
+                    </div>
+
+                    <!-- Productos -->
+                    <div class="recibo-seccion">
+                        <div class="recibo-items" id="r-items"></div>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="recibo-seccion">
+                        <div class="recibo-fila"><span class="r-label">Subtotal</span><span id="r-subtotal"></span></div>
+                        <div class="recibo-fila"><span class="r-label">Envío</span><span style="color:#2a9d5c">Entrega personal</span></div>
+                        <div class="recibo-total"><span>TOTAL</span><span id="r-total"></span></div>
+                    </div>
+
+                    <!-- Entrega -->
+                    <div class="recibo-entrega">
+                        <strong>&#128205; Forma de entrega:</strong><br>
+                        Recoge en el puesto personalmente, o coordina
+                        punto de entrega por WhatsApp.<br>
+                        <strong>No se cobra envío.</strong>
+                    </div>
+
+                    <!-- Banco -->
+                    <div class="recibo-seccion">
+                        <div style="font-size:11px;color:#888;margin-bottom:6px;letter-spacing:1px">DATOS PARA TRANSFERENCIA</div>
+                        <div class="recibo-banco">
+                            <strong>Banco:</strong> BBVA / SPEI<br>
+                            <strong>Titular:</strong> Lilia Joyería<br>
+                            <strong>CLABE:</strong> 000000000000000000<br>
+                            <strong>Cuenta:</strong> 0000000000<br>
+                            <strong>Concepto:</strong> <span id="r-concepto"></span>
+                        </div>
+                    </div>
+
+                    <div style="font-size:11px;color:#666;line-height:1.8;margin-top:6px">
+                        Envía tu comprobante de pago por <strong>WhatsApp</strong>
+                        y recibirás confirmación en menos de 24 h.
+                    </div>
+
+                    <div class="recibo-footer">
+                        — Gracias por tu compra —<br>
+                        Lilia Joyería · Creado con amor ✦
+                    </div>
+                </div>
+
+                <div class="modal-acciones">
+                    <button class="btn-imprimir" onclick="window.print()">&#128438; Guardar / Imprimir</button>
+                    <button class="btn-confirmar-pago" id="btn-confirmar-pago">
+                        &#10003; Ya realicé la transferencia
+                    </button>
+                </div>
+
+                <button class="modal-cerrar" id="modal-cerrar" style="width:100%;margin-top:10px">
+                    Volver al carrito
+                </button>
+            </div>
+
+            <!-- Vista: confirmado -->
+            <div id="vista-confirmado" style="display:none">
+                <div class="confirmado-wrap">
+                    <span class="confirmado-icono">&#10003;</span>
+                    <h2>¡Pedido registrado!</h2>
+                    <p>
+                        Gracias por tu compra. Una vez que verifiquemos
+                        tu transferencia te avisaremos por WhatsApp.
+                    </p>
+                    <p>
+                        <strong>&#128205; Recuerda:</strong> puedes recoger en el puesto
+                        o coordinamos entrega en punto medio por WhatsApp.
+                    </p>
+                    <p style="font-size:12px;color:#aaa">Folio: <strong id="conf-folio"></strong></p>
+                    <a href="anillos.html" class="btn-volver-tienda">Seguir comprando</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <strong>Copyright</strong> &nbsp;·&nbsp; <span class="autor">Creado por Erick Martínez Escobar</span>
+    </footer>
+
+    <script src="carrito.js"></script>
+    <script>
+        function fmt(n) {
+            return "$" + Number(n).toLocaleString('es-MX') + " MXN";
+        }
+
+        // ── Render carrito ────────────────────────────────────────────
+        function renderCarrito() {
+            const items    = Carrito.leer();
+            const lista    = document.getElementById("carrito-lista");
+            const btnPagar = document.getElementById("btn-pagar");
+
+            if (items.length === 0) {
+                lista.innerHTML = `
+                    <div class="carrito-vacio">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 01-8 0"/>
+                        </svg>
+                        <p>Tu carrito está vacío</p>
+                        <a href="anillos.html">Explorar anillos</a>
+                    </div>`;
+                btnPagar.disabled = true;
+                actualizarResumen(0);
+                return;
+            }
+
+            lista.innerHTML = items.map(item => {
+                const imgSrc = item.imagen.startsWith('/') ? item.imagen.substring(1) : item.imagen;
+                return `
+                <div class="carrito-item" data-id="${item.id}">
+                    <img class="carrito-item-img" src="${imgSrc}" alt="${item.nombre}"
+                         onerror="this.style.background='#f0ede8'">
+                    <div class="carrito-item-info">
+                        <h3>${item.nombre}</h3>
+                        <div class="ci-material">${item.material}</div>
+                        ${item.talla ? `<div class="ci-talla">Talla: <strong>${item.talla}</strong></div>` : ''}
+                        <div class="ci-precio">${fmt(item.precio)}</div>
+                        <div class="ci-cantidad">
+                            <button onclick="cambiarCantidad('${item.id}', ${item.cantidad - 1})">−</button>
+                            <span>${item.cantidad}</span>
+                            <button onclick="cambiarCantidad('${item.id}', ${item.cantidad + 1})">+</button>
+                        </div>
+                    </div>
+                    <button class="ci-eliminar" onclick="eliminarItem('${item.id}')" title="Eliminar">×</button>
+                </div>`;
+            }).join('');
+
+            btnPagar.disabled = false;
+            actualizarResumen(Carrito.total());
+        }
+
+        function actualizarResumen(subtotal) {
+            document.getElementById("res-subtotal").textContent = fmt(subtotal);
+            document.getElementById("res-total").textContent    = fmt(subtotal);
+        }
+
+        function cambiarCantidad(id, n) { Carrito.setCantidad(id, n); renderCarrito(); }
+        function eliminarItem(id)        { Carrito.eliminar(id);       renderCarrito(); }
+
+        document.getElementById("btn-vaciar").addEventListener('click', () => {
+            if (confirm("¿Vaciar el carrito?")) { Carrito.vaciar(); renderCarrito(); }
+        });
+
+        // ── Generar recibo y abrir modal ──────────────────────────────
+        document.getElementById("btn-pagar").addEventListener('click', () => {
+            const items  = Carrito.leer();
+            const total  = Carrito.total();
+            const folio  = "LJ-" + Date.now().toString().slice(-7);
+            const fecha  = new Date().toLocaleDateString('es-MX', {
+                day: '2-digit', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            // Llenar recibo
+            document.getElementById("r-fecha").textContent   = fecha;
+            document.getElementById("r-folio").textContent   = folio;
+            document.getElementById("r-concepto").textContent = folio;
+            document.getElementById("r-subtotal").textContent = fmt(total);
+            document.getElementById("r-total").textContent    = fmt(total);
+
+            // Líneas de productos
+            document.getElementById("r-items").innerHTML = items.map(item => `
+                <div class="ri">
+                    <div class="ri-nombre">${item.nombre}</div>
+                    <div class="ri-det">
+                        Material: ${item.material}
+                        ${item.talla ? ' · Talla: ' + item.talla : ''}
+                        · Cantidad: ${item.cantidad}
+                    </div>
+                    <div class="ri-precio">${fmt(item.precio)} × ${item.cantidad} = ${fmt(item.precio * item.cantidad)}</div>
+                </div>
+            `).join('');
+
+            // Guardar folio para pantalla de confirmado
+            document.getElementById("conf-folio").textContent = folio;
+
+            // Mostrar vista recibo
+            document.getElementById("vista-recibo").style.display    = "block";
+            document.getElementById("vista-confirmado").style.display = "none";
+            document.getElementById("modal-pago").classList.add("visible");
+        });
+
+        // ── Confirmar pago → vaciar carrito ───────────────────────────
+        document.getElementById("btn-confirmar-pago").addEventListener('click', () => {
+            Carrito.vaciar();                          // vaciar carrito
+            renderCarrito();                           // actualizar vista carrito
+            // Cambiar a pantalla de confirmado
+            document.getElementById("vista-recibo").style.display    = "none";
+            document.getElementById("vista-confirmado").style.display = "block";
+        });
+
+        // ── Cerrar modal ──────────────────────────────────────────────
+        document.getElementById("modal-cerrar").addEventListener('click', () => {
+            document.getElementById("modal-pago").classList.remove("visible");
+        });
+        document.getElementById("modal-pago").addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove("visible");
+        });
+
+        // Init
+        renderCarrito();
+    </script>
+
+</body>
+</html>

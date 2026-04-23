@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle — Lilia Joyería</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ── Layout detalle ── */
+        .detalle-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 40px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* ── Galería ── */
+        .galeria-col {}
+
+        .img-principal-wrap {
+            background: #f5f3f0;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .img-principal-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .img-principal-wrap:hover img {
+            transform: scale(1.03);
+        }
+
+        .miniaturas {
+            display: flex;
+            gap: 8px;
+        }
+        .miniatura {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: opacity 0.2s, border-color 0.2s;
+            background: #f5f3f0;
+        }
+        .miniatura.activa,
+        .miniatura:hover {
+            opacity: 1;
+            border-color: var(--gold);
+        }
+
+        /* ── Info col ── */
+        .info-col {
+            padding-top: 8px;
+        }
+
+        .detalle-categoria {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .detalle-nombre {
+            font-family: var(--font-display);
+            font-size: 34px;
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--black);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .detalle-material-tag {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: #888;
+            border: 1px solid #e0e0e0;
+            padding: 4px 12px;
+            margin-bottom: 20px;
+        }
+
+        .detalle-precio {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--black);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .detalle-precio-sub {
+            font-size: 12px;
+            color: #aaa;
+            letter-spacing: 0.5px;
+            margin-bottom: 28px;
+        }
+
+        .divisor {
+            border: none;
+            border-top: 1px solid #ebebeb;
+            margin: 24px 0;
+        }
+
+        /* ── Tallas ── */
+        .talla-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .talla-label span {
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #555;
+        }
+        .talla-guia {
+            font-size: 11px;
+            color: var(--gold);
+            text-decoration: underline;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .tallas-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .talla-btn {
+            width: 48px;
+            height: 48px;
+            border: 1px solid #ddd;
+            background: none;
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.18s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .talla-btn:hover {
+            border-color: var(--black);
+            color: var(--black);
+        }
+        .talla-btn.seleccionada {
+            border-color: var(--black);
+            background: var(--black);
+            color: #fff;
+        }
+        .talla-btn.agotada {
+            opacity: 0.35;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        .talla-aviso {
+            font-size: 12px;
+            color: #e05555;
+            margin-top: 6px;
+            min-height: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Botones acción ── */
+        .btn-agregar {
+            width: 100%;
+            background: var(--black);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-family: var(--font-body);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .btn-agregar:hover { background: var(--gold); color: var(--black); }
+
+        .btn-wishlist-full {
+            width: 100%;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 14px;
+            font-family: var(--font-body);
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #555;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-wishlist-full:hover { border-color: var(--gold); color: var(--black); }
+
+        /* ── Descripción ── */
+        .detalle-desc {
+            font-size: 14px;
+            line-height: 1.85;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* ── Acordeón de detalles ── */
+        .acordeon {
+            border-top: 1px solid #ebebeb;
+            margin-top: 30px;
+        }
+        .acordeon-item {
+            border-bottom: 1px solid #ebebeb;
+        }
+        .acordeon-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-body);
+            font-size: 13px;
+            letter-spacing: 0.8px;
+            color: var(--black);
+            cursor: pointer;
+            text-align: left;
+        }
+        .acordeon-icono {
+            font-size: 18px;
+            color: #aaa;
+            transition: transform 0.2s;
+            line-height: 1;
+        }
+        .acordeon-item.abierto .acordeon-icono { transform: rotate(45deg); }
+        .acordeon-body {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #777;
+            padding: 0 0 16px;
+            display: none;
+        }
+        .acordeon-item.abierto .acordeon-body { display: block; }
+
+        /* ── Volver ── */
+        .volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #aaa;
+            text-decoration: none;
+            margin: 0 0 24px 40px;
+            transition: color 0.2s;
+        }
+        .volver:hover { color: var(--black); }
+
+        /* ── Responsive ── */
+        @media (max-width: 860px) {
+            .detalle-wrap {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 30px;
+            }
+            .volver { margin-left: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <a href="index.html" class="logo"><span class="gem">✦</span> LILIA - JOYERIA</a>
+            <div class="header-actions">
+                <a href="carrito.html" class="carrito-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                    Carrito
+                    <span id="carrito-badge">0</span>
+                </a>
+                <a href="contacto.html" class="btn-contacto">Contacto</a>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Inicio</a>
+            <a href="anillos.html">Anillos</a>
+            <a href="collares.html">Collares</a>
+            <a href="pulseras.html">Pulseras</a>
+            <a href="aretes.html">Aretes</a>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb dinámico -->
+    <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="sep">›</span>
+        <a href="anillos.html">Anillos</a>
+        <span class="sep">›</span>
+        <span class="current" id="bc-nombre">Producto</span>
+    </div>
+
+    <a href="anillos.html" class="volver">← Volver a anillos</a>
+
+    <div class="detalle-wrap">
+
+        <!-- GALERÍA -->
+        <div class="galeria-col">
+            <div class="img-principal-wrap">
+                <img id="img-principal" src="" alt="Producto">
+            </div>
+            <div class="miniaturas" id="miniaturas"></div>
+        </div>
+
+        <!-- INFO -->
+        <div class="info-col">
+
+            <div class="detalle-categoria">Anillos</div>
+            <h1 class="detalle-nombre" id="det-nombre">—</h1>
+            <div class="detalle-material-tag" id="det-material">—</div>
+
+            <div class="detalle-precio" id="det-precio">—</div>
+            <div class="detalle-precio-sub">Precio incluye IVA · Envío gratis +$999 MXN</div>
+
+            <hr class="divisor">
+
+            <!-- TALLAS -->
+            <div class="talla-label">
+                <span>Selecciona tu talla</span>
+                <span class="talla-guia">Guía de tallas</span>
+            </div>
+            <div class="tallas-grid" id="tallas-grid"></div>
+            <div class="talla-aviso" id="talla-aviso"></div>
+
+            <!-- BOTONES -->
+            <button class="btn-agregar" id="btn-agregar">Agregar al carrito</button>
+            <button class="btn-wishlist-full">♡ &nbsp; Guardar en lista de deseos</button>
+
+            <hr class="divisor">
+
+            <!-- DESCRIPCIÓN -->
+            <p class="detalle-desc" id="det-desc">—</p>
+
+            <!-- ACORDEÓN -->
+            <div class="acordeon" id="acordeon">
+                <div class="acordeon-item">
+                    <button class="acordeon-btn">
+                        Materiales y cuidados
+                        <span class="acordeon-icono">+</span>
+                    </button>
+                    <div class="acordeon-body" id="acordeon-materiales">—</div>
+                </div>
+                <div class="acordeon-item">
+                    <button class="acordeon-btn">
+                        Envío y devoluciones
+                        <span class="acordeon-icono">+</span>
+                    </button>
+                    <div class="acordeon-body">
+                        Envío gratis en compras mayores a $999 MXN. Entregas en 3–5 días hábiles.
+                        Devoluciones aceptadas dentro de los 30 días posteriores a la compra en perfectas condiciones.
+                    </div>
+                </div>
+                <div class="acordeon-item">
+                    <button class="acordeon-btn">
+                        Garantía
+                        <span class="acordeon-icono">+</span>
+                    </button>
+                    <div class="acordeon-body">
+                        Todos nuestros productos cuentan con garantía de por vida contra defectos de fabricación.
+                        Contáctanos vía WhatsApp para cualquier reclamación.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <strong>Copyright</strong> &nbsp;·&nbsp; <span class="autor">Creado por Erick Martínez Escobar</span>
+    </footer>
+
+    <script>
+        // ── Cargar producto desde localStorage ──────────────────────────
+        const p = JSON.parse(localStorage.getItem("producto") || "null");
+
+        if (!p) {
+            document.querySelector('.detalle-wrap').innerHTML =
+                `<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:#aaa">
+                    Producto no encontrado. <a href="anillos.html" style="color:var(--gold)">Ver todos los anillos</a>
+                 </div>`;
+        } else {
+            // Breadcrumb y título de página
+            document.getElementById("bc-nombre").textContent = p.nombre;
+            document.title = p.nombre + " — Lilia Joyería";
+
+            // Nombre y material
+            document.getElementById("det-nombre").textContent   = p.nombre;
+            document.getElementById("det-material").textContent = p.material;
+
+            // Precio
+            document.getElementById("det-precio").textContent =
+                "$" + Number(p.precio).toLocaleString('es-MX') + " MXN";
+
+            // Descripción
+            document.getElementById("det-desc").textContent = p.descripcion;
+
+            // Acordeón materiales
+            document.getElementById("acordeon-materiales").textContent =
+                "Material: " + p.material + ". " +
+                "Para conservar el brillo, evita el contacto con agua, perfumes y productos químicos. " +
+                "Guarda en un lugar seco y limpia con un paño suave.";
+
+            // ── Imagen principal + miniaturas ─────────────────────────
+            // El producto tiene una sola imagen; duplicamos para mostrar miniaturas de ejemplo
+            const imgSrc = p.imagen.startsWith('/') ? p.imagen.substring(1) : p.imagen;
+            const imgPrincipal = document.getElementById("img-principal");
+            imgPrincipal.src = imgSrc;
+            imgPrincipal.alt = p.nombre;
+
+            // Miniaturas: usamos la misma imagen (cuando tengas más, agrégalas al JSON como "imagenes": [])
+            const imgs = p.imagenes
+                ? p.imagenes.map(i => i.startsWith('/') ? i.substring(1) : i)
+                : [imgSrc, imgSrc, imgSrc]; // placeholder hasta tener más imágenes
+
+            const contMin = document.getElementById("miniaturas");
+            imgs.forEach((src, i) => {
+                const img = document.createElement("img");
+                img.src       = src;
+                img.alt       = p.nombre;
+                img.className = "miniatura" + (i === 0 ? " activa" : "");
+                img.addEventListener('click', () => {
+                    imgPrincipal.src = src;
+                    document.querySelectorAll('.miniatura').forEach(m => m.classList.remove('activa'));
+                    img.classList.add('activa');
+                });
+                contMin.appendChild(img);
+            });
+
+            // ── Tallas ───────────────────────────────────────────────
+            const tallas = p.tallas || [];
+            const contTallas = document.getElementById("tallas-grid");
+            const aviso      = document.getElementById("talla-aviso");
+            let tallaSeleccionada = null;
+
+            if (tallas.length === 0) {
+                contTallas.innerHTML = `<span style="font-size:13px;color:#aaa">Talla única / ajustable</span>`;
+            } else {
+                tallas.forEach(t => {
+                    const btn = document.createElement("button");
+                    btn.className   = "talla-btn";
+                    btn.textContent = t;
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.talla-btn').forEach(b => b.classList.remove('seleccionada'));
+                        btn.classList.add('seleccionada');
+                        tallaSeleccionada = t;
+                        aviso.textContent = "";
+                    });
+                    contTallas.appendChild(btn);
+                });
+            }
+
+            // ── Botón agregar ─────────────────────────────────────────
+            const btnAgregar = document.getElementById("btn-agregar");
+            btnAgregar.addEventListener('click', () => {
+                if (tallas.length > 0 && !tallaSeleccionada) {
+                    aviso.textContent = "Por favor selecciona una talla antes de continuar.";
+                    contTallas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+                Carrito.agregar(p, tallaSeleccionada);
+                btnAgregar.textContent = "¡Agregado al carrito!";
+                btnAgregar.style.background = "#2a9d5c";
+                setTimeout(() => {
+                    btnAgregar.textContent = "Agregar al carrito";
+                    btnAgregar.style.background = "";
+                }, 2000);
+            });
+        }
+
+        // ── Acordeón ─────────────────────────────────────────────────
+        document.querySelectorAll('.acordeon-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const estaAbierto = item.classList.contains('abierto');
+                document.querySelectorAll('.acordeon-item').forEach(i => i.classList.remove('abierto'));
+                if (!estaAbierto) item.classList.add('abierto');
+            });
+        });
+    </script>
+
+    <script src="carrito.js"></script>
+</body>
+</html>
